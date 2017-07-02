@@ -1,0 +1,163 @@
+.checkbox-wraper{
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    margin: 0;
+    padding: 0;
+    z-index: 99;
+}
+.checkbox-wraper-1{
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    margin: 0;
+    
+    padding: 0;
+}
+.md-checkbox{
+    display: none;
+}
+.md-checkbox+label{
+    height: 18px;
+    width: 18px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    background-color:transparent;
+    border: 2px  solid #ff4081;
+    cursor: pointer;
+    position: relative;
+}
+.md-checkbox:checked + label{
+    background-color: #ff4081;
+}
+.md-checkbox:checked + label::after{
+    content: " ";
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    height: 8px;
+    width: 15px;
+    box-sizing: border-box;
+    position: absolute;
+    transform: rotate(-45deg);
+    top: 3px;
+    left: 2px;
+}
+
+.download-btn{
+    border: none;
+    -webkit-appearance: none;
+    background-color: #ff4081 !important;
+    background-image: none;
+    color: white;
+    width: 80px;
+    height: 40px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+}
+
+.download-btn:disabled{
+    background-color: #ffaac8;
+    color: lightgray;
+}
+
+#imgLsPanel::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+#imgLsPanel::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+#imgLsPanel::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+#imgLsPanel::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(20,20,20,.3);
+}
+#imgLsPanel::-webkit-scrollbar-thumb:active {
+  background: rgba(20,20,20,.5);
+}
+
+.image-list-panel{
+    flex-basis: 100px;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    border-right: 1px solid #f3f3f3;
+}
+
+.image-list-panel::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: transparent;
+}
+
+.image-list-panel-webkit-scrollbar-thumb {
+  background-color:  rgba(20,20,20,.3);
+}
+
+.image-list-panel ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+.image-list-panel ul li{
+    width: 100%;
+    box-sizing: border-box;
+    height: 120px;
+    padding: 0;
+    margin: 5px 5px;
+    /*margin-left: 5px;
+    margin-top: 5px;*/
+    position: relative;
+}
+
+.image-list-panel ul li:hover{
+    border: 2px solid #007acc;
+}
+
+.image-list-panel ul li img{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.image-viewer{
+    flex: 1;
+    margin: 0px 5px;
+    padding: 0;
+    height: 100%;
+    position: relative;
+}
+
+.back-btn{
+    border: none;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 100%;
+    background-color: #ff4081;
+    color: white;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+}

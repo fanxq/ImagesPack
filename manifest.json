@@ -1,0 +1,18 @@
+{
+	  "name": "Copy Page Content",					//插件名
+	  "description": "批量保存网页中图片",				//插件说明
+	  "version": "2.0",							//	版本
+	  "permissions": [								//权限，因为要在当前标签页中插件JS代码，tabs的权限是必须的，
+													//还需要可以访问任何网址。
+	    "tabs","http://*/*","https://*/*"
+	  ],
+	  "background": {								//后台运行的代码
+	    "scripts": ["bg.js"],
+	    "persistent": false
+	  },
+	  "browser_action": {							//浏览器工具栏按钮
+	    "default_title": "批量存图",
+        "default_icon":"admin_24.png"
+	  },
+	  "manifest_version": 2
+}
