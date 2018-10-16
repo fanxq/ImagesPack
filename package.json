@@ -1,0 +1,36 @@
+{
+  "name": "imagepack",
+  "version": "1.0.0",
+  "description": "pack images in a web page into a zip",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack && gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fanxq/chromeExtension4GetImages.git"
+  },
+  "keywords": [
+    "chrome",
+    "extension"
+  ],
+  "author": "fanxq",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fanxq/chromeExtension4GetImages/issues"
+  },
+  "homepage": "https://github.com/fanxq/chromeExtension4GetImages#readme",
+  "devDependencies": {
+    "css-loader": "^1.0.0",
+    "gulp": "^3.9.1",
+    "style-loader": "^0.23.1",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.0"
+  },
+  "dependencies": {
+    "vue": "^2.5.17"
+  }
+}
