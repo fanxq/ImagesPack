@@ -1,10 +1,10 @@
 <template>
-    <div class="overlay">
-        <div class="main">
-            <div class="header">
-                <h5>图片列表</h5>
+    <div class="overlay_1">
+        <div class="main_1">
+            <div class="header_1">
+                <span style="font-size:20px;font-weight:bold;color:#fff;">图片列表</span>
             </div>
-            <div class="container">
+            <div class="container_1">
                 <div v-for="(item, index) in items" :key="index" class="imgWapper">
                     <img v-bind:src="item" >
                     <div class="checkbox-wraper">
@@ -13,14 +13,21 @@
                     </div>
                 </div>
             </div>
-            <div class="footer">
-                
+            <div class="footer_1">
+                <div style="display:inline-block;">
+                    <input type="checkbox" class="md-checkbox" id="selectAll" v-model="selectAll">
+                    <label for="selectAll"></label>
+                    <label for="selectAll" style="vertical-align: top;color:#fff;">全选</label>
+                </div>
+                <div class="float:right;display:inline-block;">
+                    <button type='button' class='download-btn'>下载</button>
+                </div>
             </div>
         </div>
     </div>
 </template>
-<style socped>
-.overlay{
+<style scoped>
+.overlay_1{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -31,7 +38,7 @@
     background-color: rgba(128, 128, 128, 0.45);
     z-index: 9007199254740991;
 }
-.main{
+.main_1{
     width: 50%;
     height: 80%;
     margin: 0 auto;
@@ -39,7 +46,7 @@
     position: relative;
     box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
 }
-.container{
+.container_1{
     width: 100%;
     height: 80%;
     display: flex;
@@ -63,19 +70,15 @@
     height: 100%;
     object-fit: contain;
 }
-.header{
+.header_1{
     background-color: #007acc;
-    height: 10%;
-    width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 2.5% 20px;
 }
-.footer{
+.footer_1{
     background-color: #007acc;
-    height: 10%;
-    width: 100%;
     margin: 0;
-    padding: 0;
+    padding: 2.5% 20px;
 }
 </style>
 <script>
@@ -84,7 +87,8 @@ export default {
     data(){
         return{
             items:[],
-            selectImgs:[]
+            selectImgs:[],
+            selectAll:false
         }
     },
     mounted(){
