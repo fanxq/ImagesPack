@@ -14,13 +14,13 @@
                 </div>
             </div>
             <div class="footer_1">
-                <div style="display:inline-block;">
+                <div>
                     <input type="checkbox" class="md-checkbox" id="selectAll" v-model="selectAll">
                     <label for="selectAll"></label>
-                    <label for="selectAll" style="vertical-align: top;color:#fff;">全选</label>
+                    <label for="selectAll" style="vertical-align: top;color:#fff;">全 选</label>
                 </div>
-                <div class="float:right;display:inline-block;">
-                    <button type='button' class='download-btn'>下载</button>
+                <div>
+                    <button type='button' v-on:click="downloadImgs" class='download-btn'>下载</button>
                 </div>
             </div>
         </div>
@@ -79,16 +79,74 @@
     background-color: #007acc;
     margin: 0;
     padding: 2.5% 20px;
+    display: flex;
+    justify-content: space-between;
 }
 </style>
 <script>
+import JSZip from 'jszip';
+import FileSaver from 'file-saver';
 import "../style.css";
 export default {
     data(){
         return{
             items:[],
             selectImgs:[],
-            selectAll:false
+            selectAll:false,
+            imgZip:null
+        }
+    },
+    watch:{
+        selectAll:function(val){
+            if(val){
+                this.items && this.selectImgs.splice(0, this.selectImgs.length, ...this.items);
+            }else{
+                this.selectImgs.splice(0, this.selectImgs.length);
+            }
+        }
+    },
+    methods:{
+        downloadImgs:function () {
+            if(this.selectImgs.length > 0){
+                var cnt  = 0;
+                var self = this;
+                var imageZip = this.imgZip.folder("images");
+                for(var i = 0; i < this.selectImgs.length; i++){
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', this.selectImgs[i], true);
+                    xhr.responseType = 'arraybuffer';
+                    var imgUrl = this.selectImgs[i];
+                    var fileName ="img"+i;
+                    if(imgUrl.toLowerCase().indexOf(".png") !== -1){
+                        fileName += ".png";
+                    }
+                    else if(imgUrl.toLowerCase().indexOf("gif") !== -1){
+                        fileName += ".gif";
+                    }
+                    else{
+                        fileName += ".jpg";
+                    }
+                    xhr.imgFileName = fileName;
+                    xhr.onreadystatechange = function(e){
+                        if(this.status == 200 && this.readyState == 4){
+                            var blob = this.response;
+                            imageZip.file(this.imgFileName, blob);
+                        }
+                    }
+                    xhr.onloadend = function(e){
+                        cnt += 1;
+                        if(cnt == self.selectImgs.length){
+                            console.log(cnt);
+                            self.imgZip.generateAsync({type:"blob"})
+                            .then(function(content) {
+                                // see FileSaver.js
+                                FileSaver.saveAs(content, "images.zip");
+                            });
+                        }     
+                    }
+                    xhr.send();
+                }  
+            }
         }
     },
     mounted(){
@@ -99,6 +157,7 @@ export default {
         if(set.size > 0){
             this.items.push(...Array.from(set));
         }
+        this.imgZip = new JSZip();
     }
 }
 </script>
