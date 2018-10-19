@@ -1,5 +1,10 @@
 chrome.browserAction.onClicked.addListener(function(tab) {
-	
-    chrome.tabs.executeScript(null , {file:'main.js'});
-    
+    chrome.tabs.query(
+        {active: true, currentWindow: true}, 
+        function(tabs) {
+            chrome.tabs.sendMessage(
+                tabs[0].id, 
+                {action: "imgpack"}
+            );
+    });
 });

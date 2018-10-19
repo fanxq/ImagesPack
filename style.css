@@ -1,4 +1,4 @@
-.checkbox-wraper{
+.checkbox_wraper{
     position: absolute;
     bottom: 3px;
     right: 3px;
@@ -14,10 +14,10 @@
     
     padding: 0;
 }
-.md-checkbox{
+.md_checkbox{
     display: none;
 }
-.md-checkbox+label{
+.md_checkbox+label{
     height: 18px;
     width: 18px;
     display: inline-block;
@@ -28,10 +28,10 @@
     cursor: pointer;
     position: relative;
 }
-.md-checkbox:checked + label{
+.md_checkbox:checked + label{
     background-color: #ff4081;
 }
-.md-checkbox:checked + label::after{
+.md_checkbox:checked + label::after{
     content: " ";
     border-left: 2px solid #fff;
     border-bottom: 2px solid #fff;
@@ -44,7 +44,7 @@
     left: 2px;
 }
 
-.download-btn{
+.download_btn{
     border: none;
     -webkit-appearance: none;
     background-color: #ff4081 !important;
@@ -61,7 +61,7 @@
     right: 10px; */
 }
 
-.download-btn:disabled{
+.download_btn:disabled{
     background-color: #ffaac8;
     color: lightgray;
 }
@@ -160,4 +160,62 @@
     margin: 0;
     padding: 0;
     cursor: default;
+}
+
+.overlay{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    left:0px;
+    top: 0px;
+    background-color: rgba(128, 128, 128, 0.45);
+    z-index: 9007199254740991;
+}
+.main{
+    width: 50%;
+    height: 80%;
+    margin: 0 auto;
+    top: 10%;
+    position: relative;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
+}
+.container{
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    overflow-y: auto;
+}
+
+.imgWapper{
+    width: 32%;
+    margin-left: 1%;
+    margin-top: 1%;
+    margin-right: 0;
+    height: 120px;
+    border: 1px solid #ccc;
+    padding: 5px 0px;
+    position: relative;
+    box-sizing: border-box;
+}
+.imgWapper img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+.header{
+    background-color: #007acc;
+    margin: 0;
+    padding: 2.5% 20px;
+}
+.footer{
+    background-color: #007acc;
+    margin: 0;
+    padding: 2.5% 20px;
+    display: flex;
+    justify-content: space-between;
 }

@@ -3,7 +3,7 @@
 	  "description": "批量下载网页中图片",
 	  "version": "1.0",
 	  "permissions": [
-	    "tabs","http://*/*","https://*/*"
+	    "tabs","activeTab","http://*/*","https://*/*"
 	  ],
 	  "background": {
 			"scripts":["background.js"],
@@ -11,7 +11,10 @@
 	  },
 	  "browser_action": {
 	    "default_title": "批量存图",
-        "default_icon":"admin_24.png"
-	  },
+			"default_icon":"admin_24.png"
+		},
+		"content_scripts":[
+			{"matches":["http://*/*","https://*/*"],"js":["main.js"]}
+		],
 	  "manifest_version": 2
 }

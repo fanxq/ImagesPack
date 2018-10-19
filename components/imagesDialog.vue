@@ -1,33 +1,33 @@
 <template>
-    <div class="overlay_1">
-        <div class="main_1">
-            <div class="header_1">
+    <div v-bind:class="[styles.overlay]" v-show="show">
+        <div v-bind:class="[styles.main]">
+            <div v-bind:class="[styles.header]">
                 <span style="font-size:20px;font-weight:bold;color:#fff;">图片列表</span>
             </div>
-            <div class="container_1">
-                <div v-for="(item, index) in items" :key="index" class="imgWapper">
+            <div v-bind:class="[styles.container]">
+                <div v-for="(item, index) in items" :key="index" v-bind:class="[styles.imgWapper]">
                     <img v-bind:src="item" >
-                    <div class="checkbox-wraper">
-                        <input type="checkbox" class="md-checkbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
+                    <div v-bind:class="[styles.checkbox_wraper]">
+                        <input type="checkbox" v-bind:class="[styles.md_checkbox]" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
                         <label v-bind:for="'img'+index"></label>
                     </div>
                 </div>
             </div>
-            <div class="footer_1">
+            <div v-bind:class="[styles.footer]">
                 <div>
-                    <input type="checkbox" class="md-checkbox" id="selectAll" v-model="selectAll">
+                    <input type="checkbox" v-bind:class="[styles.md_checkbox]" id="selectAll" v-model="selectAll">
                     <label for="selectAll"></label>
                     <label for="selectAll" style="vertical-align: top;color:#fff;">全 选</label>
                 </div>
                 <div>
-                    <button type='button' v-on:click="downloadImgs" class='download-btn'>下载</button>
+                    <button type='button' v-on:click="downloadImgs" v-bind:class="[styles.download_btn]">下载</button>
                 </div>
             </div>
         </div>
     </div>
 </template>
-<style scoped>
-.overlay_1{
+<style>
+/*.overlay_1{
     position: fixed;
     width: 100%;
     height: 100%;
@@ -60,10 +60,12 @@
     width: 32%;
     margin-left: 1%;
     margin-top: 1%;
+    margin-right: 0;
     height: 120px;
     border: 1px solid #ccc;
     padding: 5px 0px;
     position: relative;
+    box-sizing: border-box;
 }
 .imgWapper img{
     width: 100%;
@@ -81,21 +83,23 @@
     padding: 2.5% 20px;
     display: flex;
     justify-content: space-between;
-}
+}*/
 </style>
 <script>
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
-import "../style.css";
+import styles from "../style.css";
 export default {
     data(){
         return{
             items:[],
             selectImgs:[],
             selectAll:false,
-            imgZip:null
+            imgZip:null,
+            styles:styles
         }
     },
+    props:["show"],
     watch:{
         selectAll:function(val){
             if(val){
