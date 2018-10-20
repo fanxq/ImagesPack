@@ -19,6 +19,7 @@
     border: 2px  solid #ff4081;
     cursor: pointer;
     position: relative;
+    box-sizing: content-box !important;
 }
 .mdCheckbox:checked + label{
     background-color: #ff4081;
