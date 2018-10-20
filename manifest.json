@@ -10,7 +10,7 @@
 	    "persistent": false
 	  },
 	  "browser_action": {
-	    "default_title": "批量存图",
+	    "default_title": "图片打包下载",
 			"default_icon":"admin_24.png"
 		},
 		"content_scripts":[

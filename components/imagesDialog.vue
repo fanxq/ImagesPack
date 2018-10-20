@@ -1,90 +1,35 @@
 <template>
     <div v-bind:class="[styles.overlay]" v-show="show">
-        <div v-bind:class="[styles.main]">
+        <div v-bind:class="[styles.main]" v-show="!packing">
             <div v-bind:class="[styles.header]">
-                <span style="font-size:20px;font-weight:bold;color:#fff;">图片列表</span>
+                <span v-bind:class="[styles.title]">图片列表</span>
+                <span v-on:click="onClose" v-bind:class="[styles.closeBtn]">&times;</span>
             </div>
             <div v-bind:class="[styles.container]">
                 <div v-for="(item, index) in items" :key="index" v-bind:class="[styles.imgWapper]">
                     <img v-bind:src="item" >
-                    <div v-bind:class="[styles.checkbox_wraper]">
-                        <input type="checkbox" v-bind:class="[styles.md_checkbox]" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
+                    <div v-bind:class="[styles.checkboxWraper]">
+                        <input type="checkbox" v-bind:class="[styles.mdCheckbox]" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
                         <label v-bind:for="'img'+index"></label>
                     </div>
                 </div>
             </div>
             <div v-bind:class="[styles.footer]">
                 <div>
-                    <input type="checkbox" v-bind:class="[styles.md_checkbox]" id="selectAll" v-model="selectAll">
+                    <input type="checkbox" v-bind:class="[styles.mdCheckbox]" id="selectAll" v-model="selectAll">
                     <label for="selectAll"></label>
                     <label for="selectAll" style="vertical-align: top;color:#fff;">全 选</label>
                 </div>
                 <div>
-                    <button type='button' v-on:click="downloadImgs" v-bind:class="[styles.download_btn]">下载</button>
+                    <button type='button' v-on:click="downloadImgs" v-bind:class="[styles.downloadBtn]">下载</button>
                 </div>
             </div>
         </div>
+        <div v-bind:class="[styles.tips]" v-show="packing">
+           <span style="font-size:20px;font-weight:bold;">正在打包图片...</span>
+        </div>
     </div>
 </template>
-<style>
-/*.overlay_1{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    left:0px;
-    top: 0px;
-    background-color: rgba(128, 128, 128, 0.45);
-    z-index: 9007199254740991;
-}
-.main_1{
-    width: 50%;
-    height: 80%;
-    margin: 0 auto;
-    top: 10%;
-    position: relative;
-    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);
-}
-.container_1{
-    width: 100%;
-    height: 80%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    background-color: #ffffff;
-    overflow-y: auto;
-}
-
-.imgWapper{
-    width: 32%;
-    margin-left: 1%;
-    margin-top: 1%;
-    margin-right: 0;
-    height: 120px;
-    border: 1px solid #ccc;
-    padding: 5px 0px;
-    position: relative;
-    box-sizing: border-box;
-}
-.imgWapper img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-.header_1{
-    background-color: #007acc;
-    margin: 0;
-    padding: 2.5% 20px;
-}
-.footer_1{
-    background-color: #007acc;
-    margin: 0;
-    padding: 2.5% 20px;
-    display: flex;
-    justify-content: space-between;
-}*/
-</style>
 <script>
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
@@ -96,7 +41,8 @@ export default {
             selectImgs:[],
             selectAll:false,
             imgZip:null,
-            styles:styles
+            styles:styles,
+            packing:false
         }
     },
     props:["show"],
@@ -110,8 +56,14 @@ export default {
         }
     },
     methods:{
+        onClose:function() {
+            this.selectImgs.splice(0, this.selectImgs.length);
+            this.packing = false;
+            this.$emit('close');
+        },
         downloadImgs:function () {
             if(this.selectImgs.length > 0){
+                this.packing = true;
                 var cnt  = 0;
                 var self = this;
                 var imageZip = this.imgZip.folder("images");
@@ -140,10 +92,10 @@ export default {
                     xhr.onloadend = function(e){
                         cnt += 1;
                         if(cnt == self.selectImgs.length){
-                            console.log(cnt);
+                            //console.log(cnt);
                             self.imgZip.generateAsync({type:"blob"})
                             .then(function(content) {
-                                // see FileSaver.js
+                                self.onClose();
                                 FileSaver.saveAs(content, "images.zip");
                             });
                         }     

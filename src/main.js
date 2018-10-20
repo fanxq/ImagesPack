@@ -6,7 +6,12 @@ let vm = new Vue({
     data:{
         show:false
     },
-    template:`<imgs-dlg v-bind:show="show"></imgs-dlg>`,
+    template:`<imgs-dlg v-bind:show="show" v-on:close="onClose"></imgs-dlg>`,
+    methods:{
+        onClose:function(){
+            this.show = false;
+        }
+    },
     components:{
         'imgs-dlg':ImagesDlg
     }    
