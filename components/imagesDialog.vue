@@ -5,7 +5,7 @@
                 <span v-bind:class="[styles.title]">图片列表</span>
                 <span v-on:click="onClose" v-bind:class="[styles.closeBtn]">&times;</span>
             </div>
-            <div v-bind:class="[styles.container]">
+            <div v-bind:class="[styles.container]" v-on:click="onContainerClick">
                 <div v-for="(item, index) in items" :key="index" v-bind:class="[styles.imgWapper]">
                     <img v-bind:src="item" >
                     <div v-bind:class="[styles.checkboxWraper]">
@@ -56,6 +56,22 @@ export default {
         }
     },
     methods:{
+        onContainerClick:function(e){
+            if(e){
+                let target = e.target;
+                if(target && target.tagName === 'IMG'){
+                    let src = target.getAttribute('src');
+                    if(src){
+                      let idx = this.selectImgs.indexOf(src);
+                      if(idx !== -1){
+                          this.selectImgs.splice(idx,1);
+                      }else{
+                          this.selectImgs.push(src);
+                      }
+                    }
+                }
+            }
+        },
         onClose:function() {
             this.selectImgs.splice(0, this.selectImgs.length);
             this.packing = false;
