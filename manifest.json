@@ -19,7 +19,10 @@
 			"default_icon":"icon16.png"
 		},
 		"content_scripts":[
-			{"matches":["http://*/*","https://*/*"],"js":["main.js"]}
+			{
+				"matches":["http://*/*","https://*/*"],
+				"js":["main.js"]
+			}
 		],
 	  "manifest_version": 2
 }
