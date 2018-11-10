@@ -25,6 +25,13 @@ overlay.style.display = 'none';
 let container = document.createElement('DIV');
 container.classList.add(styles.main);
 overlay.appendChild(container);
+let iframe = document.createElement('IFRAME');
+iframe.src = chrome.extension.getURL('iframe.html');
+iframe.frameborder = '0';
+iframe.scrolling = 'no';
+iframe.width = '100%';
+iframe.height = '100%';
+container.appendChild(iframe);
 document.body.appendChild(overlay);
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {

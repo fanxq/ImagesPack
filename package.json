@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && gulp"
+    "dev": "webpack --mode development  && gulp",
+    "build":"webpack --mode production  && gulp"
   },
   "repository": {
     "type": "git",

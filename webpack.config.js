@@ -2,11 +2,13 @@ const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-  mode: 'development',
-  entry: './src/main.js',
+  entry: {
+    main:'./src/main.js',
+    iframe:'./src/iframe/iframe.js'
+  },
   output: {
     path: path.resolve(__dirname, 'out'),
-    filename: 'main.js'
+    filename: '[name].js'
   },
   plugins: [
     // make sure to include the plugin for the magic
