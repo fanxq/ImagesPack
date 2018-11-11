@@ -1,5 +1,6 @@
 import ImagesDlg from '../components/imagesDialog.vue';
 import Vue from 'vue';
+
 let vm = new Vue({
     el:'#app',
     methods:{
@@ -11,5 +12,7 @@ let vm = new Vue({
     },
     components:{
         'imgs-dlg':ImagesDlg
-    }    
-})
+    }  
+});
+
+

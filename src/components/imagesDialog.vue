@@ -9,16 +9,15 @@
                 <div v-for="(item, index) in items" :key="index" v-bind:class="[styles.imgWapper]">
                     <img v-bind:src="item" >
                     <div v-bind:class="[styles.checkboxWraper]">
-                        <input type="checkbox" v-bind:class="[styles.mdCheckbox]" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
+                        <input type="checkbox" v-bind:class="[styles.styled_checkbox]" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
                         <label v-bind:for="'img'+index"></label>
                     </div>
                 </div>
             </div>
             <div v-bind:class="[styles.footer]">
                 <div>
-                    <input type="checkbox" v-bind:class="[styles.mdCheckbox]" id="selectAll" v-model="selectAll">
-                    <label for="selectAll"></label>
-                    <label for="selectAll" style="vertical-align: top;color:#fff;">全 选</label>
+                    <input type="checkbox" v-bind:class="[styles.styled_checkbox]" id="selectAll" v-model="selectAll">
+                    <label for="selectAll">全 选</label>
                 </div>
                 <div>
                     <button type='button' v-on:click="downloadImgs" v-bind:class="[styles.downloadBtn]">下载</button>
@@ -33,7 +32,7 @@
 <script>
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
-import styles from "../../style.css";
+import styles from "../iframe/iframe.css";
 export default {
     data(){
         return{
@@ -42,7 +41,9 @@ export default {
             selectAll:false,
             imgZip:null,
             styles:styles,
-            packing:false
+            packing:false,
+            source:null,
+            origin:null
         }
     },
     watch:{
@@ -74,7 +75,10 @@ export default {
         onClose:function() {
             this.selectImgs.splice(0, this.selectImgs.length);
             this.packing = false;
-            this.$emit('close');
+            //this.$emit('close');
+            if(this.source && this.origin){
+                this.source.postMessage("close",this.origin);
+            }
         },
         downloadImgs:function () {
             if(this.selectImgs.length > 0){
@@ -121,13 +125,19 @@ export default {
         }
     },
     mounted(){
-        var set = new Set();
-        Array.prototype.forEach.call(document.images,function(img) {
-            img.src && set.add(img.src);
-        });
-        if(set.size > 0){
-            this.items.push(...Array.from(set));
-        }
+        var that = this;
+        window.addEventListener('message',function(e){
+            if(e.data){
+                var imgUrls = JSON.parse(e.data);
+                imgUrls && that.items.splice(0, that.items.length, ...imgUrls);
+            }
+            if(e.source){
+                that.source = e.source;
+            }
+            if(e.origin){
+                that.origin = e.origin;
+            }
+        })
         this.imgZip = new JSZip();
     }
 }
