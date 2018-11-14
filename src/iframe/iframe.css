@@ -3,7 +3,7 @@ html,body{
     margin: 0;
     height: 100%;
 }
-.checkboxWraper{
+.checkboxWrapper{
     position: absolute;
     bottom: 3px;
     right: 3px;
@@ -105,7 +105,7 @@ html,body{
     overflow-y: auto;
 }
 
-.imgWapper{
+.imgWrapper{
     width: 32%;
     margin-left: 1%;
     margin-top: 1%;
@@ -116,7 +116,7 @@ html,body{
     position: relative;
     box-sizing: border-box;
 }
-.imgWapper img{
+.imgWrapper img{
     width: 100%;
     height: 100%;
     object-fit: contain;
@@ -150,4 +150,15 @@ html,body{
     font-weight:bold;
     color:#fff;
     user-select: none;
+}
+
+.selectAllWrapper{
+    position: relative;
+    height: 100%;
+    width: 100px;
+}
+.selectAll{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
