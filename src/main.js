@@ -40,13 +40,5 @@ chrome.runtime.onMessage.addListener(
         }
 });
 
-window.addEventListener('message',function(e){
-    if(e.data && e.data === 'close'){
-        show = !show;
-        if(show){
-            overlay.style.display = 'block';
-        }else{
-            overlay.style.display = 'none';
-        }
-    }
-},false)
+
+

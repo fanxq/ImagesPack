@@ -6,18 +6,20 @@
                 <span v-on:click="onClose" v-bind:class="[styles.closeBtn]">&times;</span>
             </div>
             <div v-bind:class="[styles.container]" v-on:click="onContainerClick">
-                <div v-for="(item, index) in items" :key="index" v-bind:class="[styles.imgWapper]">
+                <div v-for="(item, index) in items" :key="index" v-bind:class="[styles.imgWrapper]">
                     <img v-bind:src="item" >
-                    <div v-bind:class="[styles.checkboxWraper]">
+                    <div v-bind:class="[styles.checkboxWrapper]">
                         <input type="checkbox" v-bind:class="[styles.styled_checkbox]" v-bind:id="'img'+index" v-bind:value="item" v-model="selectImgs">
                         <label v-bind:for="'img'+index"></label>
                     </div>
                 </div>
             </div>
             <div v-bind:class="[styles.footer]">
-                <div>
-                    <input type="checkbox" v-bind:class="[styles.styled_checkbox]" id="selectAll" v-model="selectAll">
-                    <label for="selectAll">全 选</label>
+                <div v-bind:class="[styles.selectAllWrapper]">
+                    <div v-bind:class="[styles.selectAll]">
+                        <input type="checkbox" v-bind:class="[styles.styled_checkbox]" id="selectAll" v-model="selectAll">
+                        <label for="selectAll" style="color:#fff;">全选</label>
+                    </div>
                 </div>
                 <div>
                     <button type='button' v-on:click="downloadImgs" v-bind:class="[styles.downloadBtn]">下载</button>
@@ -41,9 +43,7 @@ export default {
             selectAll:false,
             imgZip:null,
             styles:styles,
-            packing:false,
-            source:null,
-            origin:null
+            packing:false
         }
     },
     watch:{
@@ -75,16 +75,16 @@ export default {
         onClose:function() {
             this.selectImgs.splice(0, this.selectImgs.length);
             this.packing = false;
-            //this.$emit('close');
-            if(this.source && this.origin){
-                this.source.postMessage("close",this.origin);
-            }
+            chrome.runtime.sendMessage('close', function(response){
+                console.log(response);
+            });
         },
         downloadImgs:function () {
             if(this.selectImgs.length > 0){
                 this.packing = true;
                 var cnt  = 0;
                 var self = this;
+                this.imgZip = new JSZip();
                 var imageZip = this.imgZip.folder("images");
                 for(var i = 0; i < this.selectImgs.length; i++){
                     var xhr = new XMLHttpRequest();
@@ -128,17 +128,15 @@ export default {
         var that = this;
         window.addEventListener('message',function(e){
             if(e.data){
-                var imgUrls = JSON.parse(e.data);
-                imgUrls && that.items.splice(0, that.items.length, ...imgUrls);
+                try {
+                    var imgUrls = JSON.parse(e.data);
+                    imgUrls && that.items.splice(0, that.items.length, ...imgUrls);
+                } catch (error) {
+                    
+                } 
             }
-            if(e.source){
-                that.source = e.source;
-            }
-            if(e.origin){
-                that.origin = e.origin;
-            }
-        })
-        this.imgZip = new JSZip();
+        });
+        //this.imgZip = new JSZip();
     }
 }
 </script>
