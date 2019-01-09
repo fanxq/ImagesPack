@@ -20,7 +20,7 @@ html,body{
     position: relative;
     cursor: pointer;
     padding: 0;
-    font-size: 16px;
+    font-size: 14px;
 }
 .styled_checkbox + label:before {
     content: '';
@@ -30,6 +30,7 @@ html,body{
     width: 20px;
     height: 20px;
     background: transparent;
+    box-sizing: border-box;
     border: 1px solid #f35429;
 }
 .styled_checkbox:hover + label:before {
