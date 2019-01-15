@@ -1,5 +1,5 @@
 {
-	  "name": "package images",
+	  "name": "ImagesPack",
 	  "description": "批量下载网页中图片",
 	  "version": "1.0",
 	  "permissions": [
