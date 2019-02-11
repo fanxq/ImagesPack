@@ -1,9 +1,4 @@
-html,body{
-    padding: 0;
-    margin: 0;
-    height: 100%;
-}
-
+let styles = `
 .checkboxWrapper{
     position: absolute;
     bottom: 3px;
@@ -12,17 +7,17 @@ html,body{
     padding: 0;
     z-index: 99;
 }
-.styled_checkbox {
+.styledCheckbox {
     position: absolute;
     opacity: 0;
 }
-.styled_checkbox + label {
+.styledCheckbox + label {
     position: relative;
     cursor: pointer;
     padding: 0;
     font-size: 14px;
 }
-.styled_checkbox + label:before {
+.styledCheckbox + label:before {
     content: '';
     margin-right: 10px;
     display: inline-block;
@@ -33,22 +28,22 @@ html,body{
     box-sizing: border-box;
     border: 1px solid #f35429;
 }
-.styled_checkbox:hover + label:before {
+.styledCheckbox:hover + label:before {
     border: 2px solid #f35429;
 }
 
-.styled_checkbox:checked + label:before {
+.styledCheckbox:checked + label:before {
     background: #f35429;
 }
-.styled_checkbox:disabled + label {
+.styledCheckbox:disabled + label {
     color: #b8b8b8;
     cursor: auto;
 }
-.styled_checkbox:disabled + label:before {
+.styledCheckbox:disabled + label:before {
     box-shadow: none;
     background: #ddd;
 }
-.styled_checkbox:checked + label:after {
+.styledCheckbox:checked + label:after {
     content: '';
     position: absolute;
     left: 5px;
@@ -164,4 +159,5 @@ html,body{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-}
+}`;
+export default styles;
