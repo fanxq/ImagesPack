@@ -34,7 +34,6 @@
 <script>
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
-//import styles from "../iframe/iframe.css";
 export default {
     data(){
         return{
@@ -42,7 +41,6 @@ export default {
             selectImgs:[],
             selectAll:false,
             imgZip:null,
-            //styles:styles,
             packing:false
         }
     },
@@ -76,9 +74,6 @@ export default {
             this.selectImgs.splice(0, this.selectImgs.length);
             this.packing = false;
             this.$emit('close');
-            // chrome.runtime.sendMessage('close', function(response){
-            //     console.log(response);
-            // });
         },
         downloadImgs:function () {
             if(this.selectImgs.length > 0){
