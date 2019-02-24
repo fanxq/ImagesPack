@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack --mode development  && gulp",
-    "build":"webpack --mode production  && gulp"
+    "build:dev": "npm run build:wc && webpack --mode development  && gulp",
+    "build": "npm run build:wc && webpack --mode production  && gulp",
+    "build:wc": "npx vue-cli-service build --target wc --name images-pack ./src/components/AppComponent.vue"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
   },
   "homepage": "https://github.com/fanxq/ImagesPack#readme",
   "devDependencies": {
+    "@vue/cli-service": "^3.4.0",
     "css-loader": "^1.0.0",
     "gulp": "^3.9.1",
     "style-loader": "^0.23.1",
@@ -33,8 +35,10 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.2.7",
     "file-saver": "^2.0.0-rc.4",
     "jszip": "^3.1.5",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-codemirror": "^4.0.6"
   }
 }

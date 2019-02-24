@@ -1,44 +1,19 @@
-import styles from "../style.css";
-import stylesContent from './styles.js';
-import ImagesDlg from './components/imagesDialog.vue';
-import Vue from 'vue';
-
-let show = false;
-let overlay = document.createElement('DIV');
-overlay.classList.add(styles.overlay);
-overlay.style.display = 'none';
-document.body.appendChild(overlay);
-let container = document.createElement('DIV');
-container.classList.add(styles.main);
-overlay.appendChild(container);
-let shadowRoot = container.attachShadow({
-    mode: 'open'
-});
-let appElement = document.createElement('div');
-let styleElement = document.createElement('style');
-styleElement.innerText = stylesContent;
-shadowRoot.appendChild(appElement);
-shadowRoot.appendChild(styleElement);
-new Vue({
-    template: `<imgs-dlg v-on:close="onClose"></imgs-dlg>`,
-    methods: {
-        onClose: function () {
-            overlay.style.display = 'none';
-        }
-    },
-    components: {
-        'imgs-dlg': ImagesDlg
+import "../build/images-pack.js";
+let vueApp = new Vue({
+  data: {
+    show: false
+  },
+  methods: {
+    onClose() {
+      this.show = false;
     }
-}).$mount(appElement);
-
-chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
-        if (request && request.action == "imgpack") {
-            show = !show;
-            if (show) {
-                overlay.style.display = 'block';
-            } else {
-                overlay.style.display = 'none';
-            }
-        }
-    });
+  },
+  template:
+    '<images-pack @close="onClose" style="width:80%;height:80%;position:fixed;top:10%;left:10%;margin:0;padding:0px;z-index:999999;font-family:Microsoft YaHei;font-size:14px;" v-show="show"></images-pack>'
+}).$mount();
+document.body.appendChild(vueApp.$el);
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request && request.action == "imgpack") {
+    vueApp.show = !vueApp.show;
+  }
+});
