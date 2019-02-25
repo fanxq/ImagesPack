@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "npm run build:wc && webpack --mode development  && gulp",
     "build": "npm run build:wc && webpack --mode production  && gulp",
-    "build:wc": "npx vue-cli-service build --target wc --name images-pack ./src/components/AppComponent.vue"
+    "build:wc": "./node_modules/.bin/vue-cli-service build --target wc --name images-pack ./src/components/AppComponent.vue"
   },
   "repository": {
     "type": "git",

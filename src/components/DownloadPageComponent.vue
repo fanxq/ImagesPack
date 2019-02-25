@@ -1,16 +1,17 @@
 <template>
-    <div class="container" v-on:click="onContainerClick">
-        <div v-for="(item, index) in imageSrcList" :key="index" class="imgWrapper">
+    <div class="imagelist" v-on:click="onContainerClick">
+        <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item">
             <img v-bind:src="item" >
-            <div class="checkboxWrapper">
-                <input type="checkbox" class="styledCheckbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectedImageSrcList">
+            <div class="checkbox">
+                <input type="checkbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectedImageSrcList">
                 <label v-bind:for="'img'+index"></label>
             </div>
         </div>
+        <button style="position:absolute;right:5px;bottom:5px;" class="btn" @click="downloadImgs"></button>
     </div>
 </template>
 <style scoped>
-    .checkboxWrapper{
+    .checkbox{
         position: absolute;
         bottom: 3px;
         right: 3px;
@@ -18,17 +19,17 @@
         padding: 0;
         z-index: 99;
     }
-    .styledCheckbox {
+    .checkbox >input[type="checkbox"]{
         position: absolute;
         opacity: 0;
     }
-    .styledCheckbox + label {
+    .checkbox >input[type="checkbox"] + label {
         position: relative;
         cursor: pointer;
         padding: 0;
         font-size: 14px;
     }
-    .styledCheckbox + label:before {
+    .checkbox >input[type="checkbox"] + label:before {
         content: '';
         margin-right: 10px;
         display: inline-block;
@@ -39,22 +40,22 @@
         box-sizing: border-box;
         border: 1px solid #f35429;
     }
-    .styledCheckbox:hover + label:before {
+    .checkbox >input[type="checkbox"]:hover + label:before {
         border: 2px solid #f35429;
     }
 
-    .styledCheckbox:checked + label:before {
+    .checkbox >input[type="checkbox"]:checked + label:before {
         background: #f35429;
     }
-    .styledCheckbox:disabled + label {
+    .checkbox >input[type="checkbox"]:disabled + label {
         color: #b8b8b8;
         cursor: auto;
     }
-    .styledCheckbox:disabled + label:before {
+    .checkbox >input[type="checkbox"]:disabled + label:before {
         box-shadow: none;
         background: #ddd;
     }
-    .styledCheckbox:checked + label:after {
+    .checkbox >input[type="checkbox"]:checked + label:after {
         content: '';
         position: absolute;
         left: 5px;
@@ -66,32 +67,41 @@
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
     }
-    .container{
+    .imagelist{
         width: 100%;
-        flex: 1;
+        height: 100%;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         background-color: #ffffff;
         overflow-y: auto;
-        align-content: flex-start;
+        align-items: center;
     }
 
-    .imgWrapper{
-        width: 32%;
-        margin-left: 1%;
-        margin-top: 1%;
-        margin-right: 0;
-        height: 120px;
+    .imagelist-item{
+        width: 140px;
+        margin: 10px 10px 0px 0px;
+        height: 160px;
         border: 1px solid #ccc;
-        padding: 5px 0px;
+        padding: 4px;
         position: relative;
         box-sizing: border-box;
     }
-    .imgWrapper img{
+    .imagelist-item img{
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+    .btn{
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        background-color: #f35429;
+        color: #ffffff;
+        outline: none;
+        border: none;
+        box-sizing: border-box;
+        box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
     }
     
 </style>
@@ -174,7 +184,7 @@ export default {
                             //console.log(cnt);
                             self.imgZip.generateAsync({type:"blob"})
                             .then(function(content) {
-                                self.onClose();
+                                //self.onClose();
                                 FileSaver.saveAs(content, "images.zip");
                             });
                         }     
@@ -185,7 +195,7 @@ export default {
         }
     },
     mounted(){
-        //this.imageSrcList.splice(0, this.imageSrcList.length, ...Array.from(new Set(Array.from(document.images).map(x=>x.src))));
+        this.imageSrcList.splice(0, this.imageSrcList.length, ...Array.from(new Set(Array.from(document.images).map(x=>x.src))));
     }
 }
 </script>
