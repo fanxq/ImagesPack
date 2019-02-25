@@ -1,10 +1,12 @@
 <template>
-    <div class="imagelist" v-on:click="onContainerClick">
-        <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item">
-            <img v-bind:src="item" >
-            <div class="checkbox">
-                <input type="checkbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectedImageSrcList">
-                <label v-bind:for="'img'+index"></label>
+    <div class="container">
+        <div class="imagelist" v-on:click="onContainerClick">
+            <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item">
+                <img v-bind:src="item" >
+                <div class="checkbox">
+                    <input type="checkbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectedImageSrcList">
+                    <label v-bind:for="'img'+index"></label>
+                </div>
             </div>
         </div>
         <button style="position:absolute;right:5px;bottom:5px;" class="btn" @click="downloadImgs"></button>
@@ -67,15 +69,19 @@
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
     }
-    .imagelist{
+    .container{
         width: 100%;
         height: 100%;
+        overflow: auto;
+    }
+    .imagelist{
+        width: 100%;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         background-color: #ffffff;
-        overflow-y: auto;
-        align-items: center;
+        align-items: flex-start;
+        justify-content: space-around;
     }
 
     .imagelist-item{

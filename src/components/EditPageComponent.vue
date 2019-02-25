@@ -27,9 +27,10 @@
 <script>
 import {codemirror} from 'vue-codemirror';
 import '../../node_modules/codemirror/mode/javascript/javascript.js';
-import '../../node_modules/codemirror/addon/hint/show-hint.js';
+import '../codeMirrorAddon/hint/show-hint.js';
 import '../../node_modules/codemirror/addon/hint/javascript-hint.js';
 import '../../node_modules/codemirror/addon/hint/anyword-hint.js';
+import '../../node_modules/codemirror/addon/edit/closebrackets.js';
 export default {
     data() {
         return {
@@ -43,7 +44,8 @@ export default {
             cmOptions:{
                 lineNumbers:true,
                 mode:'text/javascript',
-                theme:'monokai'
+                theme:'monokai',
+                autoCloseBrackets:true
             }
         }
     },
@@ -54,7 +56,7 @@ export default {
     },
     mounted () {
         this.$nextTick(()=>{
-            this.$refs.codemirror.cminstance.setSize('100%',(this.$refs.cmContainer.clientHeight - 20) + 'px');
+            this.$refs.codemirror.cminstance.setSize('100%',this.$refs.cmContainer.clientHeight + 'px');
         });   
     },
     components:{

@@ -40,6 +40,7 @@
         width: 100%;
         background-color: white;
         position: relative;
+        overflow: hidden;
     }
     .btn-close{
         position: absolute;
