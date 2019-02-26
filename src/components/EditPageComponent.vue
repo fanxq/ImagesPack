@@ -12,7 +12,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        overflow: auto;
+        /* overflow: hidden; */
     }
     .CodeMirror{
         font-family: Consolas, 'Courier New', monospace;
@@ -51,12 +51,17 @@ export default {
     },
     methods: {
         onInputRead(cm){
-            cm.showHint({container:this.$refs.cmContainer});
+            cm.showHint({container:this.$refs.codemirror.$el});
         }
     },
     mounted () {
         this.$nextTick(()=>{
             this.$refs.codemirror.cminstance.setSize('100%',this.$refs.cmContainer.clientHeight + 'px');
+        });
+        window.addEventListener('resize',()=>{
+            this.$nextTick(()=>{
+                this.$refs.codemirror.cminstance.setSize('100%',this.$refs.cmContainer.clientHeight + 'px');
+            }); 
         });   
     },
     components:{
