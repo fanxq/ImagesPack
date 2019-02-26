@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <button style="position:absolute;right:5px;bottom:5px;" class="btn" @click="downloadImgs"></button>
+        <button style="position:absolute;right:20px;bottom:20px;" class="btn" @click="downloadImgs"></button>
     </div>
 </template>
 <style scoped>
@@ -73,6 +73,8 @@
         width: 100%;
         height: 100%;
         overflow: auto;
+        padding: 30px 50px;
+        box-sizing: border-box;
     }
     .imagelist{
         width: 100%;
@@ -80,7 +82,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         background-color: #ffffff;
-        align-items: flex-start;
         justify-content: space-around;
     }
 
@@ -102,14 +103,16 @@
         width: 40px;
         height: 40px;
         border-radius: 100%;
-        background-color: #f35429;
+        background-color: #f35529b9;
         color: #ffffff;
         outline: none;
         border: none;
         box-sizing: border-box;
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
     }
-    
+    .btn:hover{
+        background-color: #f35529e7;
+    }
 </style>
 <script>
 import JSZip from 'jszip';
