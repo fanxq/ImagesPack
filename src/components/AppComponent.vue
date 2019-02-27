@@ -2,7 +2,7 @@
     <div class="modal">
         <header class="modal-header">
             <h3>ImagesPack</h3>
-            <span class="btn-close" @click="onClose">&#10006</span>
+            <span class="btn-close" @click="onClose">&#10006;</span>
         </header>
         <section class="modal-body">
             <nav class="nav">

@@ -9,7 +9,7 @@
                 </div>
             </div>
         </div>
-        <button style="position:absolute;right:20px;bottom:20px;" class="btn" @click="downloadImgs"></button>
+        <button style="position:absolute;right:30px;bottom:20px;" class="btn" @click="downloadImgs">&#8595;</button>
     </div>
 </template>
 <style scoped>
@@ -100,15 +100,16 @@
         object-fit: contain;
     }
     .btn{
-        width: 40px;
-        height: 40px;
+        width:40px;
+        height:40px;
+        box-sizing: border-box;
         border-radius: 100%;
         background-color: #f35529b9;
         color: #ffffff;
         outline: none;
         border: none;
-        box-sizing: border-box;
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
+        text-align: center;
     }
     .btn:hover{
         background-color: #f35529e7;
@@ -161,30 +162,32 @@ export default {
         downloadImgs:function () {
             if(this.selectedImageSrcList.length > 0){
                 this.packing = true;
-                var cnt  = 0;
-                var self = this;
+                let cnt  = 0;
+                let self = this;
                 this.imgZip = new JSZip();
                 var imageZip = this.imgZip.folder("images");
-                for(var i = 0; i < this.selectedImageSrcList.length; i++){
-                    var xhr = new XMLHttpRequest();
+                for(let i = 0; i < this.selectedImageSrcList.length; i++){
+                    let xhr = new XMLHttpRequest();
                     xhr.open('GET', this.selectedImageSrcList[i], true);
                     xhr.responseType = 'arraybuffer';
-                    var imgUrl = this.selectedImageSrcList[i];
-                    var fileName ="img"+i;
-                    if(imgUrl.toLowerCase().indexOf(".png") !== -1){
-                        fileName += ".png";
-                    }
-                    else if(imgUrl.toLowerCase().indexOf("gif") !== -1){
-                        fileName += ".gif";
-                    }
-                    else{
-                        fileName += ".jpg";
-                    }
-                    xhr.imgFileName = fileName;
                     xhr.onreadystatechange = function(e){
                         if(this.status == 200 && this.readyState == 4){
-                            var blob = this.response;
-                            imageZip.file(this.imgFileName, blob);
+                            let blob = this.response;
+                            let baseFileName = `img${i}.`;
+                            let imgFileName = baseFileName + 'jpg'; 
+                            let contentType = this.getResponseHeader('Content-Type');
+                            switch(contentType){
+                                case 'image/jpeg':
+                                    imgFileName = baseFileName + 'jpg';
+                                    break;
+                                case 'image/png':
+                                    imgFileName = baseFileName + 'png';
+                                    break;
+                                case 'image/gif':
+                                    imgFileName = baseFileName + 'gif';
+                                    break;
+                            }
+                            imageZip.file(imgFileName, blob);
                         }
                     }
                     xhr.onloadend = function(e){
