@@ -1,18 +1,22 @@
 <template>
     <div class="CodeMirror-container" ref="cmContainer">
         <codemirror v-model="code" :options="cmOptions" ref="codemirror" v-on:input-read="onInputRead"></codemirror>
+        <div style="position:absolute;right:40px;bottom:40px;">
+            <button class="btn" style="margin-right:5px;" @click="onSave">保存</button>
+            <button class="btn" @click="onRun">运行</button>
+        </div>
     </div>
 </template>
 <style>
     @import '../../node_modules/codemirror/lib/codemirror.css';
-    @import '../../node_modules/codemirror/theme/monokai.css';
+    @import '../../node_modules/codemirror/theme/material.css';
     @import '../../node_modules/codemirror/addon/hint/show-hint.css';
     .CodeMirror-container{
         width: 100%;
         height: 100%;
         margin: 0;
         padding: 0;
-        /* overflow: hidden; */
+        position: relative;
     }
     .CodeMirror{
         font-family: Consolas, 'Courier New', monospace;
@@ -21,6 +25,19 @@
     .CodeMirror-hints{
         font-family: Consolas, 'Courier New', monospace;
         border-radius:0px;
+    }
+    .btn{
+        min-width: 60px;
+        background-color: #f35529b9;
+        color: #ffffff;
+        outline: none;
+        border: none;
+        box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
+        text-align: center;
+        padding: 5px 5px;
+    }
+    .btn:hover{
+        background-color: #f35529e7;
     }
 </style>
 
@@ -44,7 +61,7 @@ export default {
             cmOptions:{
                 lineNumbers:true,
                 mode:'text/javascript',
-                theme:'monokai',
+                theme:'material',
                 autoCloseBrackets:true
             }
         }
@@ -52,6 +69,12 @@ export default {
     methods: {
         onInputRead(cm){
             cm.showHint({container:this.$refs.codemirror.$el});
+        },
+        onSave(){
+            
+        },
+        onRun(){
+
         }
     },
     mounted () {

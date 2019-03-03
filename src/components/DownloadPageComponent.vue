@@ -9,7 +9,15 @@
                 </div>
             </div>
         </div>
-        <button style="position:absolute;right:30px;bottom:20px;" class="btn" @click="downloadImgs">&#8595;</button>
+        <div style="position:absolute;right:10px;bottom:70px;">
+            <div class="checkbox" style="width:60px;">
+                <input type="checkbox" id="selectAll" v-model="selectAll">
+                <label for="selectAll">全选</label>
+            </div>
+        </div>
+        <div style="position:absolute;right:30px;bottom:20px;">
+            <button  class="btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
+        </div>
     </div>
 </template>
 <style scoped>
