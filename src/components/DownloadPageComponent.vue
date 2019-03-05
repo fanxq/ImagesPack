@@ -9,14 +9,14 @@
                 </div>
             </div>
         </div>
-        <div style="position:absolute;right:10px;bottom:70px;">
+        <div style="position:absolute;right:20px;bottom:70px;">
             <div class="checkbox" style="width:60px;">
                 <input type="checkbox" id="selectAll" v-model="selectAll">
                 <label for="selectAll">全选</label>
             </div>
         </div>
         <div style="position:absolute;right:30px;bottom:20px;">
-            <button  class="btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
+            <button class="round-btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
         </div>
     </div>
 </template>
@@ -107,7 +107,7 @@
         height: 100%;
         object-fit: contain;
     }
-    .btn{
+    .round-btn{
         width:40px;
         height:40px;
         box-sizing: border-box;
@@ -119,7 +119,7 @@
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
         text-align: center;
     }
-    .btn:hover{
+    .round-btn:hover{
         background-color: #f35529e7;
     }
 </style>
@@ -211,6 +211,13 @@ export default {
                     }
                     xhr.send();
                 }  
+            }
+        },
+        setImagesByRunningScript(){
+            let code = localStorage.getItem('Script4GettingImages');
+            if(code){
+                eval(code + '\r\nwindow.getImages = getImages;');
+                getImages && getImages(this);
             }
         }
     },

@@ -48,16 +48,18 @@ import '../codeMirrorAddon/hint/show-hint.js';
 import '../../node_modules/codemirror/addon/hint/javascript-hint.js';
 import '../../node_modules/codemirror/addon/hint/anyword-hint.js';
 import '../../node_modules/codemirror/addon/edit/closebrackets.js';
-export default {
-    data() {
-        return {
-            code:[
+let _code = [
                 '//编写获取图片的函数',
                 'function getImages(vm){',
                 '\t//设置vm.imageSrcList即可设置图片下载列表',
                 '\tvm.imageSrcList.splice(0, vm.imageSrcList.length, ...Array.from(new Set(Array.from(document.images).map(x=>x.src))));',
                 '}'
-            ].join('\r\n'),
+            ].join('\r\n');
+let code = localStorage.getItem('Script4GettingImages') || _code;
+export default {
+    data() {
+        return {
+            code:code,
             cmOptions:{
                 lineNumbers:true,
                 mode:'text/javascript',
@@ -71,10 +73,15 @@ export default {
             cm.showHint({container:this.$refs.codemirror.$el});
         },
         onSave(){
-            
+            if(this.code){
+                localStorage.setItem('Script4GettingImages',this.code);
+            }
         },
         onRun(){
-
+            if(this.code){
+                localStorage.setItem('Script4GettingImages',this.code);
+                this.$emit('run');
+            }
         }
     },
     mounted () {

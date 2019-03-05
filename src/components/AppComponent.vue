@@ -16,7 +16,7 @@
                 </ul>
             </nav>
             <keep-alive>
-                <component :is="componentId"></component>
+                <component :is="componentId" @run="onRunScript" ref="page"></component>
             </keep-alive>
         </section>
     </div>
@@ -102,10 +102,16 @@ export default {
     methods: {
         onClose(){
             this.$emit('close');
+        },
+        onRunScript(){
+            this.componentId = 'download-page';
+            this.$nextTick(()=>{
+                 let downloadPage = this.$refs.page;
+                if(downloadPage && downloadPage.setImagesByRunningScript){
+                    downloadPage.setImagesByRunningScript();
+                }
+            });    
         }
-    },
-    mounted () {
-        console.log("test");
     },
     components:{
         'download-page':DownloadPageComponent,
