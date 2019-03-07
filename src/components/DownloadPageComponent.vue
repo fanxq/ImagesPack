@@ -1,5 +1,14 @@
 <template>
-    <div class="container">
+    <div class="container" @scroll="onContainerScroll">
+        <div class="toolbar" :style="{'top':toolbarOffsetTop}">
+            <div style="float:right;margin-right:20px;margin-left:20px;line-height:50px;">
+                <button class="round-btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
+            </div>
+            <div class="checkbox" style="width:60px;float:right;line-height:50px;position:static;">
+                <input type="checkbox" id="selectAll" v-model="selectAll">
+                <label for="selectAll">全选</label>
+            </div>
+        </div>
         <div class="imagelist" v-on:click="onContainerClick">
             <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item">
                 <img v-bind:src="item" >
@@ -8,15 +17,6 @@
                     <label v-bind:for="'img'+index"></label>
                 </div>
             </div>
-        </div>
-        <div style="position:absolute;right:20px;bottom:70px;">
-            <div class="checkbox" style="width:60px;">
-                <input type="checkbox" id="selectAll" v-model="selectAll">
-                <label for="selectAll">全选</label>
-            </div>
-        </div>
-        <div style="position:absolute;right:30px;bottom:20px;">
-            <button class="round-btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
         </div>
     </div>
 </template>
@@ -81,8 +81,9 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        padding: 30px 50px;
+        padding: 50px;
         box-sizing: border-box;
+        position: relative;
     }
     .imagelist{
         width: 100%;
@@ -122,6 +123,16 @@
     .round-btn:hover{
         background-color: #f35529e7;
     }
+    .toolbar{
+        position:absolute;
+        height:50px;
+        box-sizing:border-box;
+        top:0;
+        left:0;
+        width:100%;
+        box-shadow:0 0 3px #ccc;
+        transition: top 0.5s;
+    }
 </style>
 <script>
 import JSZip from 'jszip';
@@ -133,7 +144,8 @@ export default {
             selectedImageSrcList:[],
             selectAll:false,
             imgZip:null,
-            packing:false
+            packing:false,
+            toolbarOffsetTop:0
         }
     },
     watch:{
@@ -218,6 +230,12 @@ export default {
             if(code){
                 eval(code + '\r\nwindow.getImages = getImages;');
                 getImages && getImages(this);
+            }
+        },
+        onContainerScroll(e){
+            if(e && e.target){
+                //console.log(e.target.scrollTop);
+                this.toolbarOffsetTop = e.target.scrollTop + 'px';
             }
         }
     },
