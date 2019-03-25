@@ -1,6 +1,6 @@
 <template>
     <div class="container" @scroll="onContainerScroll">
-        <div class="toolbar" :style="{'top':toolbarOffsetTop}">
+        <div class="toolbar" :style="{'transform': toolbarTranslateY}">
             <div style="float:right;margin-right:20px;margin-left:20px;line-height:50px;">
                 <button class="round-btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
             </div>
@@ -119,6 +119,7 @@
         border: none;
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
         text-align: center;
+        font-weight: bold;
     }
     .round-btn:hover{
         background-color: #f35529e7;
@@ -131,7 +132,8 @@
         left:0;
         width:100%;
         box-shadow:0 0 3px #ccc;
-        transition: top 0.5s;
+        z-index:100;
+        background-color: #fff;
     }
 </style>
 <script>
@@ -145,7 +147,7 @@ export default {
             selectAll:false,
             imgZip:null,
             packing:false,
-            toolbarOffsetTop:0
+            toolbarTranslateY:'translateY(0px)'
         }
     },
     watch:{
@@ -235,7 +237,7 @@ export default {
         onContainerScroll(e){
             if(e && e.target){
                 //console.log(e.target.scrollTop);
-                this.toolbarOffsetTop = e.target.scrollTop + 'px';
+                this.toolbarTranslateY = `translateY(${e.target.scrollTop}px)`;
             }
         }
     },
