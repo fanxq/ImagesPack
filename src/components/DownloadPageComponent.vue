@@ -1,6 +1,6 @@
 <template>
-    <div class="container" @scroll="onContainerScroll">
-        <div class="toolbar" :style="{'transform': toolbarTranslateY}">
+    <div class="container">
+        <div class="toolbar">
             <div style="float:right;margin-right:20px;margin-left:20px;line-height:50px;">
                 <button class="round-btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
             </div>
@@ -80,18 +80,23 @@
     .container{
         width: 100%;
         height: 100%;
-        overflow: auto;
-        padding: 50px;
+        /* overflow: auto;
+        padding: 50px; */
         box-sizing: border-box;
-        position: relative;
+        display: flex;
+        flex-direction: column;
     }
     .imagelist{
+        flex: 1;
         width: 100%;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         background-color: #ffffff;
         justify-content: space-around;
+        overflow: auto;
+        padding: 20px;
+        box-sizing: border-box;
     }
 
     .imagelist-item{
@@ -125,15 +130,15 @@
         background-color: #f35529e7;
     }
     .toolbar{
-        position:absolute;
+        /* position:absolute; */
         height:50px;
-        box-sizing:border-box;
+        /* box-sizing:border-box;
         top:0;
-        left:0;
+        left:0; */
         width:100%;
         box-shadow:0 0 3px #ccc;
         z-index:100;
-        background-color: #fff;
+        background-color:#fff;
     }
 </style>
 <script>
@@ -146,8 +151,7 @@ export default {
             selectedImageSrcList:[],
             selectAll:false,
             imgZip:null,
-            packing:false,
-            toolbarTranslateY:'translateY(0px)'
+            packing:false
         }
     },
     watch:{
@@ -232,12 +236,6 @@ export default {
             if(code){
                 eval(code + '\r\nwindow.getImages = getImages;');
                 getImages && getImages(this);
-            }
-        },
-        onContainerScroll(e){
-            if(e && e.target){
-                //console.log(e.target.scrollTop);
-                this.toolbarTranslateY = `translateY(${e.target.scrollTop}px)`;
             }
         }
     },
