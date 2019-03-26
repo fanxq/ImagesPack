@@ -9,9 +9,9 @@
                 <label for="selectAll">全选</label>
             </div>
         </div>
-        <div class="imagelist" v-on:click="onContainerClick">
+        <div class="imagelist" @click="onContainerClick">
             <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item">
-                <img v-bind:src="item" >
+                <img v-bind:src="item" @load="onImgLoad" @error="onImgError">
                 <div class="checkbox">
                     <input type="checkbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectedImageSrcList">
                     <label v-bind:for="'img'+index"></label>
@@ -80,8 +80,6 @@
     .container{
         width: 100%;
         height: 100%;
-        /* overflow: auto;
-        padding: 50px; */
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -113,6 +111,14 @@
         height: 100%;
         object-fit: contain;
     }
+    .imagelist-item .center-img{
+        display: block;
+        position: absolute;
+        top:50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        object-fit: none;
+    }
     .round-btn{
         width:40px;
         height:40px;
@@ -130,11 +136,7 @@
         background-color: #f35529e7;
     }
     .toolbar{
-        /* position:absolute; */
         height:50px;
-        /* box-sizing:border-box;
-        top:0;
-        left:0; */
         width:100%;
         box-shadow:0 0 3px #ccc;
         z-index:100;
@@ -144,6 +146,8 @@
 <script>
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
+const imageItemWidth = 140;
+const imageItemHeight = 160;
 export default {
     data(){
         return{
@@ -236,6 +240,19 @@ export default {
             if(code){
                 eval(code + '\r\nwindow.getImages = getImages;');
                 getImages && getImages(this);
+            }
+        },
+        onImgLoad(e){
+            if(e && e.target){
+                if(e.target.width < imageItemWidth && e.target.height < imageItemHeight){
+                    e.target.classList.add('center-img');
+                }
+            }
+        },
+        onImgError(e){
+            if(e && e.target){
+                console.log(`image(${e.target.src}) has an error`);
+                this.imageSrcList.splice(this.imageSrcList.indexOf(e.target.src),1);
             }
         }
     },
