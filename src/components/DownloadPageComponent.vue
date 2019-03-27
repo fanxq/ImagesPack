@@ -9,9 +9,9 @@
                 <label for="selectAll">全选</label>
             </div>
         </div>
-        <div class="imagelist" @click="onContainerClick">
-            <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item">
-                <img v-bind:src="item" @load="onImgLoad" @error="onImgError">
+        <div :id="id" class="imagelist" @click="onContainerClick">
+            <div v-for="(item, index) in imageSrcList" :key="index" class="imagelist-item" :style="{'margin':imageItemMargin}">
+                <img v-bind:src="item" @error="onImgError">
                 <div class="checkbox">
                     <input type="checkbox" v-bind:id="'img'+index" v-bind:value="item" v-model="selectedImageSrcList">
                     <label v-bind:for="'img'+index"></label>
@@ -91,9 +91,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         background-color: #ffffff;
-        justify-content: space-around;
         overflow: auto;
-        padding: 20px;
         box-sizing: border-box;
     }
 
@@ -109,15 +107,7 @@
     .imagelist-item img{
         width: 100%;
         height: 100%;
-        object-fit: contain;
-    }
-    .imagelist-item .center-img{
-        display: block;
-        position: absolute;
-        top:50%;
-        left: 50%;
-        transform: translate(-50%,-50%);
-        object-fit: none;
+        object-fit:scale-down;
     }
     .round-btn{
         width:40px;
@@ -155,7 +145,9 @@ export default {
             selectedImageSrcList:[],
             selectAll:false,
             imgZip:null,
-            packing:false
+            packing:false,
+            id:`img-list-${+(new Date)}`,
+            imageItemMargin:'0px'
         }
     },
     watch:{
@@ -242,22 +234,40 @@ export default {
                 getImages && getImages(this);
             }
         },
-        onImgLoad(e){
-            if(e && e.target){
-                if(e.target.width < imageItemWidth && e.target.height < imageItemHeight){
-                    e.target.classList.add('center-img');
-                }
-            }
-        },
         onImgError(e){
             if(e && e.target){
                 console.log(`image(${e.target.src}) has an error`);
                 this.imageSrcList.splice(this.imageSrcList.indexOf(e.target.src),1);
             }
+        },
+        layout(){
+            console.log("before:",this.imageItemMargin)
+            let elImageList = document.getElementsByTagName('images-pack') && document.getElementsByTagName('images-pack')[0].shadowRoot.getElementById(this.id);
+            if(elImageList){
+                let elImageListWidth = elImageList.clientWidth;
+                let itemNumEachRow = elImageListWidth / imageItemWidth;
+                let expectedMargin = 10;
+                let expectedMarginCnt = expectedMargin * itemNumEachRow;
+                let widthOfImageItemsInOneRow = itemNumEachRow * imageItemWidth;
+                let spaceWidthInOneRow = elImageListWidth - widthOfImageItemsInOneRow;
+                if(spaceWidthInOneRow > expectedMargin){
+                    let marginEachItem = Math.floor(spaceWidthInOneRow / itemNumEachRow / 2);
+                    this.imageItemMargin = `${marginEachItem}px`;
+                }else{
+                    itemNumEachRow = itemNumEachRow -1;
+                    widthOfImageItemsInOneRow = itemNumEachRow * imageItemWidth;
+                    spaceWidthInOneRow = elImageListWidth - widthOfImageItemsInOneRow;
+                    let marginEachItem = Math.floor(spaceWidthInOneRow / itemNumEachRow / 2);
+                    this.imageItemMargin = `${marginEachItem}px`;
+                }
+            }
         }
     },
     mounted(){
         this.imageSrcList.splice(0, this.imageSrcList.length, ...Array.from(new Set(Array.from(document.images).map(x=>x.src))));
+    },
+    activated(){
+        this.layout();
     }
 }
 </script>

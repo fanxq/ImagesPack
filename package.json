@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm run build:wc && webpack --mode development --watch",
     "build": "npm run build:wc && webpack --mode production",
-    "build:wc": "./node_modules/.bin/vue-cli-service build --target wc --name images-pack ./src/components/AppComponent.vue"
+    "build:wc": "./node_modules/.bin/vue-cli-service build --target wc --name images-pack ./src/components/AppComponent.vue",
+    "watch:wc": "./node_modules/.bin/vue-cli-service build --watch --target wc --name images-pack ./src/components/AppComponent.vue"
   },
   "repository": {
     "type": "git",

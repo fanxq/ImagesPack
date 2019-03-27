@@ -96,7 +96,18 @@ export default {
                 {title:'下载',componentId:'download-page'},
                 {title:'编辑',componentId:'editor-page'}
             ],
-            componentId:'download-page'
+            componentId:null
+        }
+    },
+    props:['visible'],
+    watch:{
+        visible:{
+            handler(val){
+                if(val && !this.componentId){
+                    this.componentId = 'download-page'
+                }
+            },
+            immediate:true
         }
     },
     methods: {
