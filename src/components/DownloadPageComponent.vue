@@ -18,6 +18,7 @@
                 </div>
             </div>
         </div>
+        <loading v-show="showLoading">{{loadingMsg}}</loading>
     </div>
 </template>
 <style scoped>
@@ -134,6 +135,7 @@
     }
 </style>
 <script>
+import LoadingComponet from './LoadingComponent';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 const imageItemWidth = 140;
@@ -147,7 +149,9 @@ export default {
             imgZip:null,
             packing:false,
             id:`img-list-${+(new Date)}`,
-            imageItemMargin:'0px'
+            imageItemMargin:'0px',
+            showLoading:false,
+            loadingMsg:'加载图片中'
         }
     },
     watch:{
@@ -184,6 +188,8 @@ export default {
         downloadImgs:function () {
             if(this.selectedImageSrcList.length > 0){
                 this.packing = true;
+                this.loadingMsg = "打包图片中...";
+                this.showLoading = true;
                 let cnt  = 0;
                 let self = this;
                 this.imgZip = new JSZip();
@@ -220,6 +226,8 @@ export default {
                             .then(function(content) {
                                 //self.onClose();
                                 FileSaver.saveAs(content, "images.zip");
+                                self.showLoading = false;
+                                self.selectedImageSrcList.splice(0,self.selectedImageSrcList.length);
                             });
                         }     
                     }
@@ -268,6 +276,9 @@ export default {
     },
     activated(){
         this.layout();
+    },
+    components:{
+        'loading':LoadingComponet
     }
 }
 </script>
