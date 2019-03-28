@@ -227,7 +227,11 @@ export default {
                                 //self.onClose();
                                 FileSaver.saveAs(content, "images.zip");
                                 self.showLoading = false;
-                                self.selectedImageSrcList.splice(0,self.selectedImageSrcList.length);
+                                if(self.selectAll){
+                                    self.selectAll = false;
+                                }else{
+                                    self.selectedImageSrcList.splice(0, self.selectedImageSrcList.length);
+                                }
                             });
                         }     
                     }
@@ -238,8 +242,12 @@ export default {
         setImagesByRunningScript(){
             let code = localStorage.getItem('Script4GettingImages');
             if(code){
-                eval(code + '\r\nwindow.getImages = getImages;');
-                getImages && getImages(this);
+                try {
+                    eval(code + '\r\nwindow.getImages = getImages;');
+                    getImages && getImages(this);
+                } catch (error) {
+                    
+                }
             }
         },
         onImgError(e){
