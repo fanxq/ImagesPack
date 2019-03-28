@@ -35,6 +35,7 @@
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
         text-align: center;
         padding: 5px 5px;
+        border-radius: 24px;
     }
     .btn:hover{
         background-color: #f35529e7;
@@ -45,9 +46,10 @@
 import {codemirror} from 'vue-codemirror';
 import '../../node_modules/codemirror/mode/javascript/javascript.js';
 import '../codeMirrorAddon/hint/show-hint.js';
-import '../../node_modules/codemirror/addon/hint/javascript-hint.js';
+import '../codeMirrorAddon/hint/javascript-hint.js';
 import '../../node_modules/codemirror/addon/hint/anyword-hint.js';
 import '../../node_modules/codemirror/addon/edit/closebrackets.js';
+import '../../node_modules/codemirror/addon/edit/matchbrackets.js';
 let _code = [
                 '//编写获取图片的函数',
                 'function getImages(vm){',
@@ -64,7 +66,8 @@ export default {
                 lineNumbers:true,
                 mode:'text/javascript',
                 theme:'material',
-                autoCloseBrackets:true
+                autoCloseBrackets:true,
+                matchBrackets:true
             }
         }
     },
