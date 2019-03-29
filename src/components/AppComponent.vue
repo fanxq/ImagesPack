@@ -16,7 +16,7 @@
                 </ul>
             </nav>
             <keep-alive>
-                <component :is="componentId" @run="onRunScript" ref="page"></component>
+                <component :is="componentId" @run="onRunScript" @scriptError="onRunScriptError" ref="page"></component>
             </keep-alive>
         </section>
     </div>
@@ -120,6 +120,15 @@ export default {
                  let downloadPage = this.$refs.page;
                 if(downloadPage && downloadPage.setImagesByRunningScript){
                     downloadPage.setImagesByRunningScript();
+                }
+            });    
+        },
+        onRunScriptError(error){
+            this.componentId = 'editor-page';
+            this.$nextTick(()=>{
+                 let editorPage = this.$refs.page;
+                if(editorPage && editorPage.showError){
+                    editorPage.showError(error);
                 }
             });    
         }

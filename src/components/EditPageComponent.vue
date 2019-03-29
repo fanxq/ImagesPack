@@ -5,6 +5,7 @@
             <button class="btn" style="margin-right:5px;" @click="onSave">保存</button>
             <button class="btn" @click="onRun">运行</button>
         </div>
+        <message-box :type="msgBoxType" v-bind:visible.sync="showMsgBox">{{msg}}</message-box>
     </div>
 </template>
 <style>
@@ -50,6 +51,7 @@ import '../codeMirrorAddon/hint/javascript-hint.js';
 import '../../node_modules/codemirror/addon/hint/anyword-hint.js';
 import '../../node_modules/codemirror/addon/edit/closebrackets.js';
 import '../../node_modules/codemirror/addon/edit/matchbrackets.js';
+import MessageBoxComponent from './MessageBoxComponent';
 let _code = [
                 '//编写获取图片的函数',
                 'function getImages(vm){',
@@ -68,7 +70,10 @@ export default {
                 theme:'material',
                 autoCloseBrackets:true,
                 matchBrackets:true
-            }
+            },
+            showMsgBox:false,
+            msg:'',
+            msgBoxType:'alert'
         }
     },
     methods: {
@@ -78,6 +83,9 @@ export default {
         onSave(){
             if(this.code){
                 localStorage.setItem('Script4GettingImages',this.code);
+                this.msgBoxType = 'msg';
+                this.msg = '保存成功！';
+                this.showMsgBox = true;
             }
         },
         onRun(){
@@ -85,6 +93,11 @@ export default {
                 localStorage.setItem('Script4GettingImages',this.code);
                 this.$emit('run');
             }
+        },
+        showError(error){
+            this.msgBoxType = 'alert';
+            this.showMsgBox = true;
+            this.msg = error;
         }
     },
     mounted () {
@@ -98,7 +111,8 @@ export default {
         });   
     },
     components:{
-        codemirror
+        codemirror,
+        'message-box':MessageBoxComponent
     }
 }
 </script>

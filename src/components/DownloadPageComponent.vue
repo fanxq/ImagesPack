@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <loading v-show="showLoading">{{loadingMsg}}</loading>
+        <message-box v-bind:visible.sync="showLoading" type="loading">{{loadingMsg}}</message-box>
     </div>
 </template>
 <style scoped>
@@ -135,7 +135,7 @@
     }
 </style>
 <script>
-import LoadingComponet from './LoadingComponent';
+import MessageBoxComponet from './MessageBoxComponent';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 const imageItemWidth = 140;
@@ -246,7 +246,8 @@ export default {
                     eval(code + '\r\nwindow.getImages = getImages;');
                     getImages && getImages(this);
                 } catch (error) {
-                    
+                    console.log(error);
+                    this.$emit('scriptError',error.toString());
                 }
             }
         },
@@ -286,7 +287,7 @@ export default {
         this.layout();
     },
     components:{
-        'loading':LoadingComponet
+        'message-box':MessageBoxComponet
     }
 }
 </script>
