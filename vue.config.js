@@ -16,5 +16,8 @@ module.exports = {
                 force: true
             }])
         ]
-    }
+    },
+    transpileDependencies: [
+        /\bvue-awesome\b/
+    ]
 }

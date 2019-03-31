@@ -2,7 +2,7 @@
     <div class="container">
         <div class="toolbar">
             <div style="float:right;margin-right:20px;margin-left:20px;line-height:50px;">
-                <button class="round-btn" @click="downloadImgs" title="下载所选图片">&#8595;</button>
+                <button class="round-btn" @click="downloadImgs" title="下载所选图片"><v-icon name="download"/></button>
             </div>
             <div class="checkbox" style="width:60px;float:right;line-height:50px;position:static;">
                 <input type="checkbox" id="selectAll" v-model="selectAll">
@@ -121,7 +121,6 @@
         border: none;
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
         text-align: center;
-        font-weight: bold;
     }
     .round-btn:hover{
         background-color: #f35529e7;
@@ -136,6 +135,8 @@
 </style>
 <script>
 import MessageBoxComponet from './MessageBoxComponent';
+import '../../node_modules/vue-awesome/icons/download.js';
+import Icon from '../../node_modules/vue-awesome/components/Icon';
 import JSZip from 'jszip';
 import FileSaver from 'file-saver';
 const imageItemWidth = 140;
@@ -287,7 +288,8 @@ export default {
         this.layout();
     },
     components:{
-        'message-box':MessageBoxComponet
+        'message-box':MessageBoxComponet,
+        'v-icon':Icon
     }
 }
 </script>
