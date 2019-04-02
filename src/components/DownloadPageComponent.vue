@@ -18,7 +18,7 @@
                 </div>
             </div>
         </div>
-        <message-box v-bind:visible.sync="showLoading" type="loading">{{loadingMsg}}</message-box>
+        <message-box :type="msgBoxType" v-bind:visible.sync="showMsgBox">{{msg}}</message-box>
     </div>
 </template>
 <style scoped>
@@ -148,11 +148,11 @@ export default {
             selectedImageSrcList:[],
             selectAll:false,
             imgZip:null,
-            packing:false,
             id:`img-list-${+(new Date)}`,
             imageItemMargin:'0px',
-            showLoading:false,
-            loadingMsg:'加载图片中'
+            showMsgBox:false,
+            msg:'加载图片中',
+            msgBoxType:'loading'
         }
     },
     watch:{
@@ -183,14 +183,13 @@ export default {
         },
         onClose:function() {
             this.selectedImageSrcList.splice(0, this.selectedImageSrcList.length);
-            this.packing = false;
             this.$emit('close');
         },
         downloadImgs:function () {
             if(this.selectedImageSrcList.length > 0){
-                this.packing = true;
-                this.loadingMsg = "打包图片中...";
-                this.showLoading = true;
+                this.msgBoxType = 'loading';
+                this.msg = "打包图片中...";
+                this.showMsgBox = true;
                 let cnt  = 0;
                 let self = this;
                 this.imgZip = new JSZip();
@@ -227,7 +226,7 @@ export default {
                             .then(function(content) {
                                 //self.onClose();
                                 FileSaver.saveAs(content, "images.zip");
-                                self.showLoading = false;
+                                self.showMsgBox = false;
                                 if(self.selectAll){
                                     self.selectAll = false;
                                 }else{
@@ -238,6 +237,10 @@ export default {
                     }
                     xhr.send();
                 }  
+            }else{
+                this.msgBoxType = 'msg';
+                this.msg = '请选择图片！';
+                this.showMsgBox = true;
             }
         },
         setImagesByRunningScript(){

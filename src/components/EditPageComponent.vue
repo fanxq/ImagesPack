@@ -33,10 +33,11 @@
         outline: none;
         border: none;
         box-shadow: 0px 0px 2px 0px rgb(158, 157, 157);
-        text-align: center;
         width: 40px;
         height: 40px;
         border-radius: 100%;
+        display: inline-flex;
+        justify-content: center;
     }
     .btn:hover{
         background-color: #f35529e7;
