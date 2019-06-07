@@ -269,12 +269,21 @@ var mac = /Mac/.test(navigator.platform);
       below = true;
     hints.style.left = left + "px";
     hints.style.top = top + "px";
+    var container = completion.options.container;
+    var containerParentWindow = document.querySelector('images-pack');
     // If we're at the edge of the screen, then we want the menu to appear on the left of the cursor.
-    var winW = parentWindow.innerWidth || Math.max(ownerDocument.body.offsetWidth, ownerDocument.documentElement.offsetWidth);
-    var winH = parentWindow.innerHeight || Math.max(ownerDocument.body.offsetHeight, ownerDocument.documentElement.offsetHeight);
-    (completion.options.container || ownerDocument.body).appendChild(hints);
-    var box = hints.getBoundingClientRect(),
-      overlapY = box.bottom - winH;
+    var winW = container.offsetWidth || parentWindow.innerWidth || Math.max(ownerDocument.body.offsetWidth, ownerDocument.documentElement.offsetWidth);
+    var winH = container.offsetHeight || parentWindow.innerHeight || Math.max(ownerDocument.body.offsetHeight, ownerDocument.documentElement.offsetHeight);
+    (container || ownerDocument.body).appendChild(hints);
+    var hintsDomRect = hints.getBoundingClientRect();
+    var box = JSON.parse(JSON.stringify(hintsDomRect));
+    var offsetLeft = containerParentWindow.offsetLeft;
+    var offsetTop = containerParentWindow.offsetTop + (containerParentWindow.offsetHeight - container.offsetHeight);
+    box.bottom = box.bottom - offsetTop;
+    box.top = box.top - offsetTop;
+    box.left = box.left - offsetLeft;
+    box.right = box.right - offsetLeft;
+    var overlapY = box.bottom - winH;
     var scrolls = hints.scrollHeight > hints.clientHeight + 1
     var startScroll = cm.getScrollInfo();
 
@@ -282,7 +291,12 @@ var mac = /Mac/.test(navigator.platform);
       var height = box.bottom - box.top,
         curTop = pos.top - (pos.bottom - box.top);
       if (curTop - height > 0) { // Fits above cursor
-        hints.style.top = (top = pos.top - height) + "px";
+        var scorllTop = startScroll.height - startScroll.clientHeight;
+        if (scorllTop > 0) {
+          hints.style.top = (top = pos.top - height - scorllTop) + "px";
+        } else {
+          hints.style.top = (top = pos.top - height) + "px";
+        }
         below = false;
       } else if (height > winH) {
         hints.style.height = (winH - 5) + "px";
@@ -343,7 +357,7 @@ var mac = /Mac/.test(navigator.platform);
       var curScroll = cm.getScrollInfo(),
         editor = cm.getWrapperElement().getBoundingClientRect();
       var newTop = top + startScroll.top - curScroll.top;
-      var point = newTop - (parentWindow.pageYOffset || (ownerDocument.documentElement || ownerDocument.body).scrollTop);
+      var point = newTop + offsetTop /* - (parentWindow.pageYOffset || (ownerDocument.documentElement || ownerDocument.body).scrollTop)*/ ;
       if (!below) point += hints.offsetHeight;
       if (point <= editor.top || point >= editor.bottom) return completion.close();
       hints.style.top = newTop + "px";
