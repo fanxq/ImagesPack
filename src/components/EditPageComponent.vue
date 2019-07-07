@@ -27,6 +27,17 @@
         font-family: Consolas, 'Courier New', monospace;
         border-radius:0px;
     }
+    .CodeMirror-hints::-webkit-scrollbar{
+        background-color: transparent;
+        width: 4px;
+    }
+    .CodeMirror-hints::-webkit-scrollbar-thumb{
+        background-color: #afafaf;
+        border-radius: 2px;
+    }
+    .CodeMirror-hints::-webkit-scrollbar-track{
+        background: transparent;
+    }
     .btn{
         background-color: #f35529b9;
         color: #ffffff;
