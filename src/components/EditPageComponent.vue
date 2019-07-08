@@ -38,6 +38,42 @@
     .CodeMirror-hints::-webkit-scrollbar-track{
         background: transparent;
     }
+    .CodeMirror-vscrollbar{
+        background: transparent;
+        border-left: 1px solid #505050;
+    }
+    .CodeMirror-vscrollbar::-webkit-scrollbar{
+        background: transparent;
+        width: 14px;
+    }
+    .CodeMirror-vscrollbar::-webkit-scrollbar-thumb{
+        background: transparent;
+    }
+    .CodeMirror-vscrollbar::-webkit-scrollbar-track{
+        background: transparent;
+    }
+    .CodeMirror-hscrollbar{
+        background: transparent;
+        border: none;
+        /* border-left: 1px solid #505050; */
+    }
+    .CodeMirror-hscrollbar::-webkit-scrollbar{
+        background: transparent;
+        height: 14px;
+    }
+    .CodeMirror-hscrollbar::-webkit-scrollbar-thumb{
+        background: transparent;
+    }
+    .CodeMirror-hscrollbar::-webkit-scrollbar-track{
+        background: transparent;
+    }
+    .CodeMirror-scrollbar-filler{
+        background: transparent;
+        width: 15px !important;
+        height: 16px !important;
+        border-left: 1px solid #505050;
+        border-top: 1px solid #505050;
+    }
     .btn{
         background-color: #f35529b9;
         color: #ffffff;
@@ -52,6 +88,12 @@
     }
     .btn:hover{
         background-color: #f35529e7;
+    }
+    .vue-codemirror:hover .CodeMirror-vscrollbar::-webkit-scrollbar-thumb{
+        background: rgba(79, 79, 79, 0.45);
+    }
+    .vue-codemirror:hover .CodeMirror-hscrollbar::-webkit-scrollbar-thumb{
+        background: rgba(79, 79, 79, 0.45);
     }
 </style>
 
