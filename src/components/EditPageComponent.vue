@@ -12,6 +12,7 @@
     @import '../../node_modules/codemirror/lib/codemirror.css';
     @import '../../node_modules/codemirror/theme/material.css';
     @import '../../node_modules/codemirror/addon/hint/show-hint.css';
+    @import url(https://cdn.jsdelivr.net/gh/tonsky/FiraCode@1.206/distr/fira_code.css);
     .CodeMirror-container{
         width: 100%;
         height: 100%;
@@ -20,7 +21,8 @@
         position: relative;
     }
     .CodeMirror{
-        font-family: Consolas, 'Courier New', monospace;
+        font-family:'Fira Code', Consolas, 'Courier New', monospace;
+        font-variant-ligatures: contextual;
     }
      
     .CodeMirror-hints{

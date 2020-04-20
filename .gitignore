@@ -4,3 +4,4 @@ dist
 build
 wc
 src/images-pack.js
+package-lock.json
