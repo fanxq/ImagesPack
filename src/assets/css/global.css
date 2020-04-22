@@ -1,0 +1,14 @@
+.crx-dialog {
+  min-width:500px;
+  min-height:500px;
+  width:80%;
+  height:80%;
+  position:fixed;
+  top:10%;
+  left:10%;
+  margin:0;
+  padding:0px;
+  font-family:arial,sans-serif;
+  font-size:14px;
+  z-index: 99999;
+}

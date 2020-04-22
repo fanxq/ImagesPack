@@ -21,7 +21,8 @@
         </section>
     </div>
 </template>
-<style scoped>
+<style>
+    @import '../../node_modules/normalize.css/normalize.css';
     .modal{
         height: 100%;
         display: flex;
