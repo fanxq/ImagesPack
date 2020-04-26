@@ -267,28 +267,21 @@ export default {
             if(elImageList){
                 let elImageListWidth = elImageList.clientWidth;
                 let itemNumEachRow = elImageListWidth / imageItemWidth;
-                let expectedMargin = 10;
-                let expectedMarginCnt = expectedMargin * itemNumEachRow;
-                let widthOfImageItemsInOneRow = itemNumEachRow * imageItemWidth;
-                let spaceWidthInOneRow = elImageListWidth - widthOfImageItemsInOneRow;
-                if(spaceWidthInOneRow > expectedMargin){
-                    let marginEachItem = Math.floor(spaceWidthInOneRow / itemNumEachRow / 2);
-                    this.imageItemMargin = `${marginEachItem}px`;
-                }else{
-                    itemNumEachRow = itemNumEachRow -1;
-                    widthOfImageItemsInOneRow = itemNumEachRow * imageItemWidth;
-                    spaceWidthInOneRow = elImageListWidth - widthOfImageItemsInOneRow;
-                    let marginEachItem = Math.floor(spaceWidthInOneRow / itemNumEachRow / 2);
-                    this.imageItemMargin = `${marginEachItem}px`;
-                }
+                itemNumEachRow = Math.floor(itemNumEachRow);
+                let diff = elImageListWidth - (itemNumEachRow * imageItemWidth);
+                this.imageItemMargin = `${Math.floor(diff/itemNumEachRow/2)}px`;
             }
         }
     },
     mounted(){
         this.imageSrcList.splice(0, this.imageSrcList.length, ...Array.from(new Set(Array.from(document.images).map(x=>x.src))));
+        window.addEventListener('resize', this.layout, false);
     },
     activated(){
         this.layout();
+    },
+    destroyed() {
+        window.removeEventListener('resize', this.layout, false);
     },
     components:{
         'message-box':MessageBoxComponet,
